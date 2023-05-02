@@ -1,14 +1,13 @@
 package com.figo.weatherapp.entity;
 
 import com.figo.weatherapp.entity.template.AbsLongEntity;
+import com.figo.weatherapp.enums.PermissionEnum;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.*;
 
-import javax.persistence.Column;
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
 import java.util.Objects;
 
 @Getter
@@ -24,9 +23,9 @@ import java.util.Objects;
 @SQLDelete(sql = "update permission set deleted=true where id=?")
 public class Permission extends AbsLongEntity {
 
-    //FRONTENDCHI SHU NAME BILAN ISHLAYDI
     @Column(nullable = false)
-    private String name;//(studentHome, studentList, mentorHome...)
+    @Enumerated(EnumType.STRING)
+    private PermissionEnum permissionEnum;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

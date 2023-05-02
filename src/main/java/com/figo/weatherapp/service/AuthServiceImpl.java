@@ -2,6 +2,7 @@ package com.figo.weatherapp.service;
 
 import com.figo.weatherapp.net.ApiResult;
 import com.figo.weatherapp.payload.*;
+import com.figo.weatherapp.repository.AuthUserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,10 +17,11 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements  UserDetailsService  , AuthService{
 
-
+    private final AuthUserRepository authUserRepository;
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+    public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException {
+        return authUserRepository.findFirstByPhoneNumberAndEnabledIsTrueAndAccountNonExpiredIsTrueAndCredentialsNonExpiredIsTrueAndAccountNonLockedIsTrue(phoneNumber)
+                .orElseThrow(() -> new UsernameNotFoundException(phoneNumber));
     }
 
     @Override

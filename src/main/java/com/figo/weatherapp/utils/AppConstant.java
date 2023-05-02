@@ -30,6 +30,8 @@ public interface AppConstant {
     String SERVICE_USERNAME_HEADER = "username";
     String[] OPEN_PAGES_FOR_ALL_METHOD = {
          AuthController.AUTH_CONTROLLER_PATH + "**",
+            "/swagger",
+            "/api-docs",
             "/api/auth/actuator/refresh",
             "/actuator/refresh",
     };

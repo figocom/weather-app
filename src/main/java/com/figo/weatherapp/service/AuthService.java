@@ -1,11 +1,8 @@
 package com.figo.weatherapp.service;
 
-import com.figo.weatherapp.entity.Role;
-import com.figo.weatherapp.enums.RoleType;
 import com.figo.weatherapp.net.ApiResult;
 import com.figo.weatherapp.payload.*;
 
-import java.util.List;
 import java.util.Map;
 
 public interface AuthService {

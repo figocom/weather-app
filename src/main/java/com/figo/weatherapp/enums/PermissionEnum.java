@@ -14,6 +14,11 @@ import java.util.Optional;
 @Getter
 @Slf4j
 public enum PermissionEnum {
-
-
+    GET_ROLE(false),
+    ADD_ROLE( false),
+    EDIT_ROLE( false),
+    DELETE_ROLE( false),
+    GET_LANGUAGES(false),
+    GET_KEYS( false);
+    private boolean deleted;
 }

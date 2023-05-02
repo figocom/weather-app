@@ -6,8 +6,8 @@ import com.figo.weatherapp.net.ErrorData;
 import com.figo.weatherapp.repository.AuthUserRepository;
 import com.figo.weatherapp.utils.AppConstant;
 import com.google.gson.Gson;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,7 +28,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
-@RequiredArgsConstructor
+
 @Component
 public class JwtAuthenticationFilter
         extends OncePerRequestFilter {
@@ -39,6 +39,14 @@ public class JwtAuthenticationFilter
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
+    public JwtAuthenticationFilter(Gson gson, Environment environment, @Lazy AuthUserRepository userRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider) {
+        this.gson = gson;
+        this.environment = environment;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
+
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest httpServletRequest,
                                     @NotNull HttpServletResponse httpServletResponse,
@@ -46,27 +54,8 @@ public class JwtAuthenticationFilter
 
         log.info("httpServletRequest {}", httpServletRequest);
 
-        String serviceUsername = httpServletRequest.getHeader(AppConstant.SERVICE_USERNAME_HEADER);
-        String servicePassword = httpServletRequest.getHeader(AppConstant.SERVICE_PASSWORD_HEADER);
-
-        if ((!httpServletRequest.getRequestURI().contains("actuator/refresh") &&
-                (serviceUsername == null || servicePassword == null ||
-                        environment.getProperty(serviceUsername) == null ||
-                        !Objects.equals(environment.getProperty(serviceUsername), servicePassword)))) {
+        if ((!(httpServletRequest.getRequestURI().contains("actuator/refresh") || httpServletRequest.getRequestURI().contains("swagger") || httpServletRequest.getRequestURI().contains("api-docs"))))  {
             ApiResult<ErrorData> errorDataApiResult = ApiResult.errorResponse("FORBIDDEN", 403);
-            httpServletResponse.getWriter().write(gson.toJson(errorDataApiResult));
-            httpServletResponse.setStatus(403);
-            httpServletResponse.setContentType("application/json");
-            return;
-        }
-        log.info("serviceUsername {}", serviceUsername);
-        log.info("servicePassword {}", servicePassword);
-
-        if ((!httpServletRequest.getRequestURI().contains("actuator/refresh") &&
-                (serviceUsername == null || servicePassword == null ||
-                        environment.getProperty(serviceUsername) == null ||
-                        !Objects.equals(environment.getProperty(serviceUsername), servicePassword)))) {
-            ApiResult<ErrorData> errorDataApiResult = ApiResult.errorResponse("FORBIDDEN_SERVICE_NAME_NOT_FOUND", 403);
             httpServletResponse.getWriter().write(gson.toJson(errorDataApiResult));
             httpServletResponse.setStatus(403);
             httpServletResponse.setContentType("application/json");
@@ -112,7 +101,7 @@ public class JwtAuthenticationFilter
         log.info("token {}", token);
         log.info("split[0] {}", split[0]);
         //USERNI PHONENUMBER ORQALI DB DAN OLYAPDI TOPILMASA BO'SH OPTIONAL QAYTARADI
-        Optional<AuthUser> optionalUser = userRepository.findFirstByPhoneNumberAndCanEnterWithBasicAuthIsTrueAndEnabledIsTrueAndAccountNonExpiredIsTrueAndCredentialsNonExpiredIsTrueAndAccountNonLockedIsTrue(split[0]);
+        Optional<AuthUser> optionalUser = userRepository.findFirstByPhoneNumberAndEnabledIsTrueAndAccountNonExpiredIsTrueAndCredentialsNonExpiredIsTrueAndAccountNonLockedIsTrue(split[0]);
         if (optionalUser.isPresent()) {
             AuthUser user = optionalUser.get();
             log.info("user {}", user);

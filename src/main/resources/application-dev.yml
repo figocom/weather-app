@@ -92,3 +92,13 @@ management:
     health:
       show-details: always
 
+app:
+  jwt:
+    access:
+      token:
+        key: "j~T2>2VgYH$g~e5Ae7418f6c-cf41-11eb-b8bc-0242ac1300032VgYH$g"
+        expiration-in-ms: 604800000
+    refresh:
+      token:
+        key: "Q&qhFLXq:*aS8G>1d797e14-cf42-11eb-b8bc-0242ac130003qhF"
+        expiration-in-ms: 604800000
