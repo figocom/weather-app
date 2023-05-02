@@ -69,5 +69,8 @@ public class ApiResult<T> implements Serializable {
     public static ApiResult<ErrorData> errorResponse(String errorMsg, Integer errorCode) {
         return new ApiResult<>(errorMsg, errorCode);
     }
+    public static <E> ApiResult<E> successResponse(E data) {
+        return new ApiResult<>(data, true);
+    }
 
 }

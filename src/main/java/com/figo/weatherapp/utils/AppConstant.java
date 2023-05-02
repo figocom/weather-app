@@ -1,5 +1,7 @@
 package com.figo.weatherapp.utils;
 
+import com.figo.weatherapp.controller.AuthController;
+
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
@@ -8,7 +10,6 @@ import java.util.UUID;
  * 01.05.2023
  */
 public interface AppConstant {
-    String GLOBAL_PHONE_NUMBER_REGEX = "^\\+998[0-9]{9}$";
     String GLOBAL_UUID_REGEX = "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}";
     String DOMAIN = "http://localhost:8080";
     String BASE_PATH = "/api";
@@ -27,4 +28,11 @@ public interface AppConstant {
     Integer ACCESS_DENIED = 405;
     String SERVICE_PASSWORD_HEADER = "Password";
     String SERVICE_USERNAME_HEADER = "username";
+    String[] OPEN_PAGES_FOR_ALL_METHOD = {
+         AuthController.AUTH_CONTROLLER_PATH + "**",
+            "/api/auth/actuator/refresh",
+            "/actuator/refresh",
+    };
+    String PHONE_NUMBER_REGEX = "^\\+998[0-9]{9}$";
+    String SMS_CODE_REGEX = "^[0-9]{5,8}$";
 }
