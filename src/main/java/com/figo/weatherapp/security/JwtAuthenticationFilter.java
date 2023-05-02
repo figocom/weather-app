@@ -54,7 +54,13 @@ public class JwtAuthenticationFilter
 
         log.info("httpServletRequest {}", httpServletRequest);
 
-        if ((!(httpServletRequest.getRequestURI().contains("actuator/refresh") || httpServletRequest.getRequestURI().contains("swagger") || httpServletRequest.getRequestURI().contains("api-docs"))))  {
+        String serviceUsername = httpServletRequest.getHeader(AppConstant.SERVICE_USERNAME_HEADER);
+        String servicePassword = httpServletRequest.getHeader(AppConstant.SERVICE_PASSWORD_HEADER);
+
+        if (!(httpServletRequest.getRequestURI().contains("actuator/refresh") || httpServletRequest.getRequestURI().contains("swagger") || httpServletRequest.getRequestURI().contains("api-docs") &&
+                (serviceUsername == null || servicePassword == null ||
+                        environment.getProperty(serviceUsername) == null ||
+                        !Objects.equals(environment.getProperty(serviceUsername), servicePassword)))){
             ApiResult<ErrorData> errorDataApiResult = ApiResult.errorResponse("FORBIDDEN", 403);
             httpServletResponse.getWriter().write(gson.toJson(errorDataApiResult));
             httpServletResponse.setStatus(403);

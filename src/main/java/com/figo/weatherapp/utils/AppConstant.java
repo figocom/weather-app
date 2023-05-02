@@ -1,9 +1,6 @@
 package com.figo.weatherapp.utils;
 
-import com.figo.weatherapp.controller.AuthController;
-
-import java.time.format.DateTimeFormatter;
-import java.util.UUID;
+import com.figo.weatherapp.controller.auth.AuthController;
 
 /**
  * @author Murtozayev Manguberdi
@@ -11,9 +8,8 @@ import java.util.UUID;
  */
 public interface AppConstant {
     String GLOBAL_UUID_REGEX = "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}";
-    String DOMAIN = "http://localhost:8080";
     String BASE_PATH = "/api";
-    String BASE_PATH_V1 = BASE_PATH + "/v1";
+    String BASE_PATH_V1 = BASE_PATH + "/v1/";
     String AUTHORIZATION_HEADER = "Authorization";
     String AUTHORIZATION_HEADER_PREFIX = "Bearer ";
 
@@ -30,7 +26,7 @@ public interface AppConstant {
     String SERVICE_USERNAME_HEADER = "username";
     String[] OPEN_PAGES_FOR_ALL_METHOD = {
          AuthController.AUTH_CONTROLLER_PATH + "**",
-            "/swagger",
+            "/swagger-ui/**",
             "/api-docs",
             "/api/auth/actuator/refresh",
             "/actuator/refresh",

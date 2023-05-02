@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.TimeZone;
@@ -19,6 +20,7 @@ import java.util.TimeZone;
 @EnableScheduling
 @SpringBootApplication
 @EnableFeignClients
+@EnableAsync
 @RequestMapping(path = AppConstant.BASE_PATH)
 @EnableJpaRepositories("com.figo.weatherapp.repository")
 @EntityScan("com.figo.weatherapp.entity")

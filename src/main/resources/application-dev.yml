@@ -69,7 +69,7 @@ logging:
   pattern:
     file: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
   file:
-    name: classpath:logs/weather.log
+    name: classpath:logback.xml
   level:
     com.figo.weatherapp.feign: DEBUG
     org.springframework.web: ERROR
