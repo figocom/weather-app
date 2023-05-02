@@ -20,8 +20,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.time.Duration;
 
 /**
- * Author: Muhammad Mo'minov
- * 08.06.2021
+ * Author: Murtazayev Manguberdi
+ * Date: 2023-05-01
  */
 @Configuration
 @EnableCaching()

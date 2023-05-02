@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * @author Muhammad Mo'minov
- * 06.11.2021
+ * @author Murtozayev Manguberdi
+ * 01.05.2023
  */
 @Slf4j
 @Component

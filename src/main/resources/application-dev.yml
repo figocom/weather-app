@@ -1,0 +1,94 @@
+server:
+  host: localhost
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/weather
+    username: postgres
+    password: root123
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      minimumIdle: 2
+      maximumPoolSize: 10
+      idleTimeout: 130000
+      connectionTimeout: 310000
+      leakDetectionThreshold: 310000
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  liquibase:
+    change-log: classpath:liquibase/master.yaml
+    enabled: false
+  jackson:
+    serialization:
+      FAIL-ON-EMPTY-BEANS: false
+
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        connection:
+          charset: UTF-8
+          hbm2ddl:
+            import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
+  sql:
+    init:
+      mode: never
+  cache:
+    type: redis
+    redis:
+      key-prefix: education.
+      cache-null-values: false
+  redis:
+    host: localhost
+    port: 6379
+    timeout: 1000
+    ssl: false
+    lettuce:
+      pool:
+        max-wait: 1000
+        max-active: 1000
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger
+    tags-sorter: alpha
+    operations-sorter: alpha
+    disable-swagger-default-url: true
+
+logging:
+  pattern:
+    file: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+  file:
+    name: classpath:logs/weather.log
+  level:
+    com.figo.weatherapp.feign: DEBUG
+    org.springframework.web: ERROR
+    org.hibernate: ERROR
+
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 3000
+        read-timeout: 3000
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+

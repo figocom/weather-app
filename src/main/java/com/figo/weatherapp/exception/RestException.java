@@ -74,8 +74,8 @@ public class RestException extends RuntimeException {
     }
 
     /**
-     * @param resourceKey - {@link org.springframework.context.MessageSource} bo'yicha kelishi kerak. Masalan "GROUP"
-     * @return Guruh topilmadi!
+     * @param resourceKey - {@link org.springframework.context.MessageSource} bo'yicha kelishi kerak. Masalan "Shaxar"
+     * @return Shaxar topilmadi!
      */
     public static RestException notFound(String resourceKey) {
         return new RestException(

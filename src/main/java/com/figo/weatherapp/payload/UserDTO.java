@@ -17,8 +17,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
- * @author Muhammad Mo'minov
- * 06.11.2021
+ * @author Murtozayev Manguberdi
+ * 01.05.2023
  */
 @AllArgsConstructor
 @NoArgsConstructor

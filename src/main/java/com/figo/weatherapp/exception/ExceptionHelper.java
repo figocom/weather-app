@@ -216,7 +216,7 @@ public class ExceptionHelper {
             exceptionMessageDTO.setUser(userDTO);
             exceptionMessageDTO.setMessage(message);
             exceptionMessageDTO.setUrl(url);
-            exceptionMessageDTO.setServiceName("education");
+            exceptionMessageDTO.setServiceName("weather-service");
             //todo rabbitMQProducerService.sendExceptions(exceptionMessageDTO);
             //rabbitMQProducerService.sendExceptions(exceptionMessageDTO);
         } catch (Exception e) {

@@ -10,8 +10,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
- * @author Muhammad Mo'minov
- * 06.11.2021
+ * @author Murtozayev Manguberdi
+ * 01.05.2023
  */
 @Getter
 @Setter

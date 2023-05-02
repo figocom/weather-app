@@ -22,11 +22,11 @@ import java.util.Objects;
 @NoArgsConstructor
 @Getter
 @Setter
-@SQLDelete(sql = ("update " + TableNameConstant.ADMISSION_STUDENT + " set deleted=true where id=?"))
+@SQLDelete(sql = ("update " + TableNameConstant.AUTH_USER + " set deleted=true where id=?"))
 @Where(clause = "deleted=false")
-@Entity(name = TableNameConstant.ADMISSION_STUDENT)
+@Entity(name = TableNameConstant.AUTH_USER)
 public class AuthUser extends AbsUUIDUserAuditEntity {
-
+    private String username;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

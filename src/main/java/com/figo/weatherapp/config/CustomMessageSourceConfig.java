@@ -9,8 +9,8 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import java.util.Locale;
 
 /**
- * @author Muhammad Mo'minov
- * 18.10.2021
+ * @author Murtozayev Manguberdi
+ * 01.05.2023
  */
 @Configuration
 public class CustomMessageSourceConfig {

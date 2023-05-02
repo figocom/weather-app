@@ -14,8 +14,8 @@ import java.text.SimpleDateFormat;
 /**
  * This class not documented :(
  *
- * @author Muhammad Mo'minov
- * @since 8/2/2022
+ * @author Murtozayev Manguberdi
+ * @since 01.05.2023
  */
 @Configuration
 public class BeanFactory {

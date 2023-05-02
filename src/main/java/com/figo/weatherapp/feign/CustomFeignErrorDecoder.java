@@ -8,12 +8,14 @@ import feign.Response;
 import feign.codec.ErrorDecoder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
 
 @Slf4j
+@Configuration
 @RequiredArgsConstructor
 public class CustomFeignErrorDecoder implements ErrorDecoder {
 

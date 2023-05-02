@@ -24,8 +24,8 @@ import static com.figo.weatherapp.utils.CommonUtils.currentRequest;
 
 
 /**
- * @author Muhammad Mo'minov
- * 06.11.2021
+ * @author Murtozayev Manguberdi
+ * 01.05.2023
  */
 @Slf4j
 @Order(value = 1)
@@ -68,34 +68,6 @@ public class CheckAuthAspect {
         }
     }
 
-    private boolean notPermission(List<String> userPermissions, PermissionEnum[] mustPermission) {
-        if (userPermissions == null)
-            return true;
 
-        for (PermissionEnum permissionEnum : mustPermission) {
-            if (userPermissions.contains(permissionEnum.name()))
-                return false;
-        }
-        return true;
-    }
-
-    private boolean notPermission(String permission, PermissionEnum[] mustPermission) {
-        if (permission == null || permission.isEmpty())
-            return true;
-        for (PermissionEnum permissionEnum : mustPermission) {
-            if (permission.contains(permissionEnum.name()))
-                return false;
-        }
-        return true;
-    }
-
-    private void setUserIdAndPermissionFromRequest(HttpServletRequest httpServletRequest, String token) {
-        String userId = CommonUtils.getUserIdFromRequest(httpServletRequest);
-        String permissions = CommonUtils.getUserPermissionsFromRequest(httpServletRequest);
-
-        httpServletRequest.setAttribute(AppConstant.REQUEST_ATTRIBUTE_CURRENT_USER_ID, userId);
-        httpServletRequest.setAttribute(AppConstant.REQUEST_ATTRIBUTE_CURRENT_USER_PERMISSIONS, permissions);
-        httpServletRequest.setAttribute(AppConstant.AUTHORIZATION_HEADER, token);
-    }
 
 }

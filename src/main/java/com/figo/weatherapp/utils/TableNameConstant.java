@@ -1,5 +1,5 @@
 package com.figo.weatherapp.utils;
 
 public interface TableNameConstant {
-    String ADMISSION_STUDENT = "";
+    String AUTH_USER = "auth_user";
 }

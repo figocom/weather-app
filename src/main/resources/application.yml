@@ -1,0 +1,20 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: WeatherService
+  profiles:
+    active: dev
+    redis:
+      repositories:
+        enabled: false
+
+service:
+  serviceUsername: usernameEducationService
+
+basic:
+  auth:
+    username: EducationUsernameForBasicAuth
+    password: Education%%Password##For@@Basic&&Auth$$1
+

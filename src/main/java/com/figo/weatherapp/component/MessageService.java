@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
- * @author Muhammad Mo'minov
- * 16.09.2021
+ * @author Murtozayev Manguberdi
+ * 01.05.2023
  */
 @Component
 @RequiredArgsConstructor
