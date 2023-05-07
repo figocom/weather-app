@@ -20,14 +20,11 @@ http://localhost:8888/ui
 
 ## Open for all users
 
-```http
-  GET /api/v1/weather/city/{cityName}
-```
 
-#### Register
+#### POST Register
 
 ```http
-  POST /api/v1/auth/application/sign-up
+  api/v1/auth/application/sign-up
 ```
 
 | Parameter          | Type     | Description |
@@ -37,17 +34,19 @@ http://localhost:8888/ui
 | `username`         | `string` | **unique**  |
 | `password`         | `string` |             |
 | `confrim password` | `string` |             |
+####
  You can get a token from the response body
 
-#### Login
+#### POST Login
 
 ```http
-  POST /api/v1/auth/application/sign-in
+    api/v1/auth/application/sign-in
 ```
 | Parameter  | Type     | Description  |
 |:-----------|:---------|:-------------|
 | `username` | `string` | **Required** |
 | `password` | `string` | **Required** |
+####
     You can get a token from the response body
 
 ## Open for registered users
@@ -55,13 +54,13 @@ http://localhost:8888/ui
 #### GET user own info
 
 ```http
-  GET /api/v1/user/application/me
+  api/v1/user/application/me
 ```
 
 #### PUT user edit own info
 
 ```http
-  PUT /api/v1/user/edit-self
+  api/v1/user/edit-self
 ```
 | Parameter          | Type      | Description                     |
 |:-------------------|:----------|:--------------------------------|
@@ -69,12 +68,13 @@ http://localhost:8888/ui
 | `firstname`        | `string`  |                                 |
 | `lastname`         | `string`  |                                 |
 | `current password` | `string`  | **must equal user db password** |
+####
 **Required JWT token**
 
 #### POST RESET PASSWORD
 
 ```http
-  POST /api/v1/user/reset-password
+  api/v1/user/reset-password
 ```
 
 | Parameter          | Type      | Description                     |
@@ -82,21 +82,23 @@ http://localhost:8888/ui
 | `new password`     | `string`  |                                 |
 | `confrim password` | `string`  | **must equal new password**     |
 | `current password` | `string`  | **must equal user db password** |
+####
 **Required JWT token**
 
 
 #### GET get-all available cities
 
 ```http
-  GET /api/v1/user/get-all-cities
+  api/v1/user/get-all-cities
 ```
+####
 **Required JWT token**
  Users can see only available cities
 
 #### POST subscribe to city
 
 ```http
-  POST /api/v1/user/subscribe-city-weather/{cityId}
+    api/v1/user/subscribe-city-weather/{cityId}
 ```
 | Parameter | Type      | Description            |
 |:----------|:----------|:-----------------------|
@@ -105,7 +107,7 @@ http://localhost:8888/ui
 #### DELETE unsubscribe from city
 
 ```http
-  DELETE /api/v1/user/remove-subscribtion/{cityId}
+   api/v1/user/remove-subscribtion/{cityId}
 ```
 | Parameter | Type      | Description            |
 |:----------|:----------|:-----------------------|
@@ -114,8 +116,9 @@ http://localhost:8888/ui
 #### GET get-all subscribed cities weather
 
 ```http
-  GET /api/v1/user/get-subscribed-cities-weather
+  api/v1/user/get-subscribed-cities-weather
 ```
+####
 **Required JWT token**
 
 ## Open for admin users
@@ -123,14 +126,15 @@ http://localhost:8888/ui
 #### GET get-all users
 
 ```http
-  GET /api/v1/admin/user-list
+  api/v1/admin/user-list
 ```
+####
 **Required JWT token**
 
 #### GET user details
 
 ```http
-    GET /api/v1/admin/user-details/{userId}
+   api/v1/admin/user-details/{userId}
 ```
 | Parameter | Type      | Description            |
 |:----------|:----------|:-----------------------|
@@ -139,7 +143,7 @@ http://localhost:8888/ui
 #### PATCH user edit
 
 ```http
-    PATCH /api/v1/admin/edit-user
+    api/v1/admin/edit-user
 ```
 | Parameter               | Type      | Description    |
 |:------------------------|:----------|:---------------|
@@ -149,65 +153,70 @@ http://localhost:8888/ui
 | `accountNonExpired`     | `boolean` |                |
 | `accountNonLocked`      | `boolean` |                |
 | `credentialsNonExpired` | `boolean` |                |
+####
 **Required JWT token**
 
 #### POST Create city
     
 ```http
-        POST /api/v1/city/create-city
+     api/v1/city/create-city
 ```
 | Parameter  | Type      | Description      |
 |:-----------|:----------|:-----------------|
 | `cityName` | `string`  | **Required**     |
 | `enabled`  | `boolean` | **default true** |
+####
 **Required JWT token**
 
 #### GET get-all cities
 
 ```http
-  GET /api/v1/city/get-all-city
+  api/v1/city/get-all-city
 ```
+#####
 **Required JWT token**
 #### GET get-all cities with disabled
 
 ```http
-  GET /api/v1/city/get-all-city-with-disabled
+  api/v1/city/get-all-city-with-disabled
 ```
+####
 **Required JWT token**
 
 #### PATCH city edit
 
 ```http
-    PATCH /api/v1/city/update-city/{cityId}
+    api/v1/city/update-city/{cityId}
 ```
 | Parameter  | Type      | Description  |
 |:-----------|:----------|:-------------|
 | `cityId`   | `Integer` | **Required** |
 | `cityName` | `string`  |              |
 | `enabled`  | `boolean` |              |
-
+####
 **Required JWT token**
 
 #### GET city details
 
 ```http
-    GET /api/v1/city/get-city-by-id/{cityId}
+    api/v1/city/get-city-by-id/{cityId}
 ```
 | Parameter  | Type      | Description  |
 |:-----------|:----------|:-------------|
 | `cityId`   | `Integer` | **Required** |
-
+####
 **Required JWT token**
 
 #### PATCH update city weather
 
 ```http
-    PATCH /api/v1/city/update-city-weather/{cityId}
+    api/v1/city/update-city-weather/{cityId}
 ```
 | Parameter  | Type      | Description  |
 |:-----------|:----------|:-------------|
 | `cityId`   | `Integer` | **Required** |
-#### auto update city weather from open weather api Link: https://api.weatherapi.com
+#### 
+auto update city weather from open weather api Link: https://api.weatherapi.com
  with Reactive Feign Client
 **Required JWT token**
 
@@ -223,7 +232,8 @@ http://localhost:8888/ui
 
 #### update city weather manually
 
-```http api/v1/city/update-city-weather-manual/{cityId}
+```http 
+     api/v1/city/update-city-weather-manual/{cityId}
 ```
 | Parameter  | Type      | Description  |
 |:-----------|:----------|:-------------|
@@ -234,6 +244,7 @@ http://localhost:8888/ui
 | `wind_mph` | `double`  |              |
 | `wind_dir` | `string`  |              |
 | `humidity` | `double`  |              |
+####
 **Required JWT token**
 
 ## Features
