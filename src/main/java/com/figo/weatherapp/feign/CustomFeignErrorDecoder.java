@@ -23,8 +23,22 @@ public class CustomFeignErrorDecoder implements ErrorDecoder {
 
 
 
+    /**
+     * The decode function is responsible for translating the response from the server into an exception.
+     * The default implementation will create a new RuntimeException with the message from the response body,
+     * but you can override this method to create your own custom exceptions.
+
+     *
+     * @param methodKey String methodKey Identify the method that is being called
+     * @param response Response Get the response body as a string
+     *
+     * @return An exception, which is then thrown by the feign client
+     *
+     * @docauthor Manguberdi
+     */
     @Override
     public Exception decode(final String methodKey, final Response response) {
+
         final String error = getResponseBodyAsString(response.body());
         log.error("Exception in another server with error code: {}, URL: {}, Body: {}", response.status(), response.request().url(), error);
         try {
@@ -42,7 +56,18 @@ public class CustomFeignErrorDecoder implements ErrorDecoder {
 
     }
 
+    /**
+     * The getResponseBodyAsString function takes a Response.Body object and returns the body as a String.
+     *
+     *
+     * @param body Response.Body Get the response body
+     *
+     * @return The response body as a string
+     *
+     * @docauthor Manguberdi
+     */
     private String getResponseBodyAsString(final Response.Body body) {
+
         try {
             byte[] bytes = StreamUtils.copyToByteArray(body.asInputStream());
             return new String(bytes);

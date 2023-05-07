@@ -2,7 +2,6 @@ package com.figo.weatherapp.entity;
 
 import com.figo.weatherapp.entity.template.AbsIntEntity;
 import com.figo.weatherapp.utils.TableNameConstant;
-import io.micrometer.core.instrument.config.NamingConvention;
 import lombok.*;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;

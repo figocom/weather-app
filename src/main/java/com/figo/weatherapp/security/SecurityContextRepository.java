@@ -23,8 +23,19 @@ public class SecurityContextRepository implements ServerSecurityContextRepositor
         return null;
     }
 
+    /**
+     * The load function is called by the WebFilterChainProxy to load a SecurityContext for each request.
+     * The function returns a Mono&lt;SecurityContext&gt; which will be empty if no authentication information is found,
+     * or contains an authenticated SecurityContext otherwise.
+     * @param exchange exchange Get the request and response objects
+     *
+     * @return A mono&lt;securitycontext&gt; which is an empty mono if no token was found or the token is invalid
+     *
+     * @docauthor Manguberdi
+     */
     @Override
     public Mono<SecurityContext> load(ServerWebExchange exchange) {
+
         String token = tokenProvider.resolveToken(exchange.getRequest());
         if (token != null && tokenProvider.validateToken(token)) {
             return Mono.just(token)

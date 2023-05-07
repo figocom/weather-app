@@ -43,8 +43,18 @@ public class UserServiceImpl implements UserService {
         this.cityRepository = cityRepository;
     }
 
+    /**
+     * The resetPassword function is used to reset a user's password.
+     * @param resetPasswordDTO resetPasswordDTO Get the old password, new password and confirm new password from the request body
+     * @param exchange exchange Gets the token from the header
+     *
+     * @return A mono&lt;apiresult&lt;tokendto&gt;&gt;
+     *
+     * @docauthor Manguberdi
+     */
     @Override
     public Mono<ApiResult<TokenDTO>> resetPassword(ResetPasswordDTO resetPasswordDTO, ServerWebExchange exchange) {
+
         if (!resetPasswordDTO.getNewPassword().equals(resetPasswordDTO.getConfirmNewPassword())){
             return Mono.error(RestException.badRequest("password not match"));
         }
@@ -65,8 +75,17 @@ public class UserServiceImpl implements UserService {
         return Mono.error(RestException.badRequest("token not found"));
     }
 
+    /**
+     * The getApplicationUserMe function is used to retrieve the user's information from the database.
+     * @param exchange exchange Gets the token from the request header
+     *
+     * @return A mono&lt;apiresult&lt;userdto&gt;&gt;
+     *
+     * @docauthor Manguberdi
+     */
     @Override
     public Mono<ApiResult<UserDTO>> getApplicationUserMe(ServerWebExchange exchange) {
+
         UserDetails userDetails = jwtTokenProvider.getUserDetails(exchange);
         UserDTO userDTO=new UserDTO();
 
@@ -85,8 +104,20 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    /**
+     * The editUserSelf function is used to edit the user's own information.
+
+     * @param userEditDTO userEditDTO Get the user's id, first name, last name and current password
+     * @param exchange exchange Gets the user's token from the request header
+
+     *
+     * @return A mono&lt;mono&lt;apiresult&lt;string&gt;&gt;&gt;
+     *
+     * @docauthor Manguberdi
+     */
     @Override
     public Mono<Mono<ApiResult<String>>> editUserSelf(UserEditDTO userEditDTO, ServerWebExchange exchange) {
+
         Mono<AuthUser> user = authUserRepository.findFirstByIdAndEnabledIsTrueAndAccountNonExpiredIsTrueAndCredentialsNonExpiredIsTrueAndAccountNonLockedIsTrue(userEditDTO.getId());
         return user.flatMap(
                 authUser -> {
@@ -99,8 +130,18 @@ public class UserServiceImpl implements UserService {
                 }).switchIfEmpty(Mono.error(RestException.notFound("user")));
     }
 
+    /**
+     * The subscribeCityWeather function subscribes a user to a city's weather.
+     * @param id id Get the city id from the url
+     * @param exchange exchange Gets the user details from the token
+     *
+     * @return A mono&lt;apiresult&lt;subscriptionresponse&gt;&gt;
+     *
+     * @docauthor Manguberdi
+     */
     @Override
     public Mono<ApiResult<SubscriptionResponse>> subscribeCityWeather(String id, ServerWebExchange exchange) {
+
         Mono<City> cityMono = cityRepository.findById(Integer.valueOf(id)).switchIfEmpty(Mono.error(RestException.notFound("city")));
         UserDetails userDetails = jwtTokenProvider.getUserDetails(exchange);
         Mono<AuthUser> user =
@@ -114,8 +155,17 @@ public class UserServiceImpl implements UserService {
         })).switchIfEmpty(Mono.error(RestException.badRequest("user not found")));
     }
 
+    /**
+     * The getSubscribedCitiesWeather function is a function that returns the weather of all cities that are subscribed to by the user.
+     * @param exchange exchange Gets the user's jwt token from the request header
+     *
+     * @return A flux of apiresult&lt;list&lt;cityweatherdto&gt;&gt;
+     *
+     * @docauthor Manguberdi
+     */
     @Override
     public Flux<ApiResult<List<CityWeatherDto>>> getSubscribedCitiesWeather(ServerWebExchange exchange) {
+
         UserDetails userDetails = jwtTokenProvider.getUserDetails(exchange);
         Mono<AuthUser> user =
                 authUserRepository.findFirstByUsernameAndEnabledIsTrueAndAccountNonExpiredIsTrueAndCredentialsNonExpiredIsTrueAndAccountNonLockedIsTrue(userDetails.getUsername());
@@ -128,13 +178,30 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    /**
+     * The getAllCities function is a function that returns all the cities in the database.
+     * @return A flux of apiresult&lt;list&lt;cityweatherdto&gt;&gt;
+     *
+     * @docauthor Manguberdi
+     */
     @Override
     public Flux<ApiResult<List<CityWeatherDto>>> getAllCities() {
+
         return cityService.getCities();
     }
 
+    /**
+     * The removeSubscription function removes a subscription from the database.
+     * @param cityId cityId Find the subscription in the database
+     * @param exchange exchange Retrieves the user's jwt token from the request header
+     *
+     * @return A mono&lt;apiresult&lt;string&gt;&gt;
+     *
+     * @docauthor Manguberdi
+     */
     @Override
     public Mono<ApiResult<String>> removeSubscription(Integer cityId, ServerWebExchange exchange) {
+
         UserDetails userDetails = jwtTokenProvider.getUserDetails(exchange);
         Mono<AuthUser> user =
                 authUserRepository.findFirstByUsernameAndEnabledIsTrueAndAccountNonExpiredIsTrueAndCredentialsNonExpiredIsTrueAndAccountNonLockedIsTrue(userDetails.getUsername());

@@ -29,7 +29,20 @@ import static ch.qos.logback.classic.PatternLayout.HEADER_PREFIX;
 @Slf4j
 public class JwtTokenProvider {
 
+    /**
+     * The createToken function creates a JWT token using the username and authorities of the AuthUser object.
+     * The expiry date is set to be one hour from now, and the subject (username) is added as a claim.
+     * Finally, we sign our token with our secret key using HMAC256 algorithm.
+
+     *
+     * @param authUser authUser Get the username and authorities of the user
+     *
+     * @return A jwt token
+     *
+     * @docauthor Manguberdi
+     */
     public String createToken(AuthUser authUser) {
+
         Date expiry = JwtUtils.getExpiry();
         String username = authUser.getUsername();
         Collection<? extends GrantedAuthority> authorities = authUser.getAuthorities();
@@ -44,7 +57,20 @@ public class JwtTokenProvider {
     }
 
 
+    /**
+     * The validateToken function takes a token as an argument and returns true if the token is valid.
+     * The function uses the JwtUtils class to verify that the signature of the token is correct,
+     * and that it has not expired. If either of these conditions are false, then validateToken will return false.
+
+     *
+     * @param token token Pass in the token to be verified
+     *
+     * @return A boolean value
+     *
+     * @docauthor Manguberdi
+     */
     public boolean validateToken(String token) {
+
         try {
             DecodedJWT verify = JwtUtils.getVerifier().verify(token);
             log.info("expiration date: {}", verify.getExpiresAt());
@@ -56,18 +82,24 @@ public class JwtTokenProvider {
         return false;
     }
 
-    public String getUserIdFromToken(String token) {
-        String JWT_SECRET_KEY_FOR_ACCESS_TOKEN = "j~T2>2VgYH$g~e5Ae7418f6c-cf41-11eb-b8bc-0242ac1300032VgYH$g";
-        String userId = Jwts.parser()
-                .setSigningKey(JWT_SECRET_KEY_FOR_ACCESS_TOKEN)
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
-        return showUserId(userId);
+
+
+    /**
+     * The getAuthentication function is used to validate the token sent by the user.
+     * If the token is valid, we set the user’s details in Spring Security’s
+     * Authentication object. This method returns null if the JWT token is invalid.
+
+     *
+     * @param token token Get the username and roles from the token
 
     }
-
+     *
+     * @return An object of type usernamepasswordauthenticationtoken
+     *
+     * @docauthor Manguberdi
+     */
     public Authentication getAuthentication(String token) {
+
 
         DecodedJWT jwt = JwtUtils.getVerifier().verify(token);
         String username = jwt.getSubject();
@@ -88,15 +120,20 @@ public class JwtTokenProvider {
 
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
-    private String hideUserId(String userId) {
-        String generatingUUID = String.valueOf(UUID.randomUUID());
-        String substring = generatingUUID.substring(0, 18);
-        String concat = substring.concat("-");
-        String concat1 = concat.concat(userId);
-        String substring1 = generatingUUID.substring(18);
-        return concat1.concat(substring1);
-    }
+    /**
+     * The resolveToken function is used to extract the JWT from the Authorization header of an incoming request.
+     * The function first checks if there is a token in the header, and then it extracts it by removing &quot;Bearer&quot; from
+     * its value. If no token exists, null will be returned instead.
+
+     *
+     * @param request request Get the authorization header from the request
+     *
+     * @return The token from the request header
+     *
+     * @docauthor Manguberdi
+     */
     public String resolveToken(ServerHttpRequest request) {
+
         String bearerToken = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(AppConstant.AUTHORIZATION_HEADER_PREFIX)) {
             return bearerToken.substring(7);
@@ -104,9 +141,16 @@ public class JwtTokenProvider {
         return null;
     }
 
-    private String showUserId(String concat) {
-        return concat.substring(19, 55);
-    }
+    /**
+     * The getUserDetails function is used to get the user details from the exchange.
+     *
+     *
+     * @param exchange exchange Get the request object
+     *
+     * @return The user details of the token
+     *
+     * @docauthor Manguberdi
+     */
     public UserDetails getUserDetails(ServerWebExchange exchange){
         String token =resolveToken(exchange.getRequest());
         if (StringUtils.hasText(token) && validateToken(token)) {

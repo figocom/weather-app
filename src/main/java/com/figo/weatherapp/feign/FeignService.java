@@ -15,6 +15,7 @@ import reactor.core.publisher.Mono;
 )
 public interface FeignService {
 
+
      @GetMapping
      Mono<String> getWeather(@PathVariable String city);
 }

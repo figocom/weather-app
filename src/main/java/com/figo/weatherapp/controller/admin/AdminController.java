@@ -18,6 +18,8 @@ public interface AdminController {
     String GET_USER_LIST="user-list";
     String GET_USER_DETAILS="user-details/{id}";
     String EDIT_USER="edit-user";
+    //write documentation
+
     @GetMapping(GET_USER_LIST)
     Flux<ApiResult<List<UserDTO>>> getUsers();
 

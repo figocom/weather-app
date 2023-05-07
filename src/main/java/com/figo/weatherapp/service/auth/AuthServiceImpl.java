@@ -34,8 +34,17 @@ public class AuthServiceImpl implements ReactiveUserDetailsService, AuthService 
 
 
 
+    /**
+     * The signUpApplication function is used to sign up a new user.
+     * @param signUpDTO signUpDTO Get the username, password, firstname and lastname from the request body
+     *
+     * @return A mono&lt;apiresult&lt;tokendto&gt;&gt;
+     *
+     * @docauthor Manguberdi
+     */
     @Override
     public Mono<ApiResult<TokenDTO>> signUpApplication(SignUpDTO signUpDTO) {
+
         if (!signUpDTO.getPassword().equals(signUpDTO.getPrePassword())){
             return Mono.error(RestException.badRequest("password not match"));
         }
@@ -56,8 +65,17 @@ public class AuthServiceImpl implements ReactiveUserDetailsService, AuthService 
 
     }
 
+    /**
+     * The signInApplication function is used to sign in an application.
+     * @param signInDTO signInDTO Get the username and password from the request body
+     *
+     * @return A mono of apiresult&lt;tokendto&gt;
+     *
+     * @docauthor Manguberdi
+     */
     @Override
     public Mono<ApiResult<TokenDTO>> signInApplication(SignInDTO signInDTO) {
+
      return authUserRepository.
              findFirstByUsernameAndEnabledIsTrueAndAccountNonExpiredIsTrueAndCredentialsNonExpiredIsTrueAndAccountNonLockedIsTrue(signInDTO.getUsername()).
              switchIfEmpty(Mono.error(RestException.notFound(signInDTO.getUsername()))).
@@ -66,8 +84,17 @@ public class AuthServiceImpl implements ReactiveUserDetailsService, AuthService 
 
 
 
+    /**
+     * The findByUsername function is used to find a user by their username.
+     * @param username username Finds the user in the database
+     *
+     * @return A mono&lt;userdetails&gt; object
+     *
+     * @docauthor Manguberdi
+     */
     @Override
     public Mono<UserDetails> findByUsername(String username) {
+
        return authUserRepository.findFirstByUsernameAndEnabledIsTrueAndAccountNonExpiredIsTrueAndCredentialsNonExpiredIsTrueAndAccountNonLockedIsTrue(username).cast(UserDetails.class);
     }
 }

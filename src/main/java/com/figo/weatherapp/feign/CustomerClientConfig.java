@@ -70,8 +70,20 @@ public class CustomerClientConfig {
         return (methodKey, response) -> new RetryableException(response.status(), "", null, Date.from(Instant.EPOCH), null);
     }
 
+    /**
+     * The reactiveOptions function creates a ReactiveOptions object that is used to configure the reactive client.
+     * The WebReactiveOptions class provides a builder pattern for creating an instance of ReactiveOptions.
+     *
+     *
+     *
+     *
+     * @return A reactiveoptions object
+     *
+     * @docauthor Manguberdi
+     */
     @Bean
     public ReactiveOptions reactiveOptions() {
+
         return new WebReactiveOptions.Builder()
                 .setReadTimeoutMillis(readTimeout)
                 .setWriteTimeoutMillis(writeTimeout)

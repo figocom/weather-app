@@ -22,8 +22,19 @@ public class AdminServiceImpl implements AdminService{
         this.authUserRepository = authUserRepository;
     }
 
+    /**
+     * The getUsers function returns a Flux of ApiResult&lt;List&lt;UserDTO&gt;&gt;.
+     * The function first calls the findAll() method on the authUserRepository, which returns a Flux of AuthUsers.
+     * Then, we map each AuthUser to its corresponding UserDTO using the builder pattern and return it as part of an ApiResult object.
+     * Finally, we buffer all UserDTOs into one list and wrap them in another ApiResult object before returning them to our client application.
+
+     * @return A flux of apiresult&lt;list&lt;userdto&gt;&gt;
+     *
+     * @docauthor Manguberdi
+     */
     @Override
     public Flux<ApiResult<List<UserDTO>>> getUsers() {
+
         return authUserRepository.findAll().map(authUser ->
                         UserDTO.builder().
                                 id(authUser.getId()).
@@ -36,8 +47,17 @@ public class AdminServiceImpl implements AdminService{
                 .buffer().map(ApiResult::successResponse);
     }
 
+    /**
+     * The getUserDetails function is a function that takes in an id and returns the user details of the user with that id.
+     * @param id id Get the user details from the database
+     *
+     * @return A mono&lt;apiresult&lt;userdetaildto&gt;&gt;
+     *
+     * @docauthor Manguberdi
+     */
     @Override
     public Mono<ApiResult<UserDetailDTO>> getUserDetails(String id) {
+
         return authUserRepository.findById(Integer.valueOf(id)).map(authUser ->
                 UserDetailDTO.builder().
                         id(authUser.getId()).
@@ -52,8 +72,15 @@ public class AdminServiceImpl implements AdminService{
                         .build()).map(ApiResult::successResponse);
     }
 
+    /**
+     * The editUser function is used to edit a user's information.
+     * @param userEditByAdminDTO userEditByAdminDTO Get the user's id, role, enabled status and account non-expired status
+     * @return A mono&lt;apiresult&lt;userdto&gt;&gt;
+     * @docauthor Manguberdi
+     */
     @Override
     public Mono<ApiResult<UserDTO>> editUser(UserEditByAdminDTO userEditByAdminDTO) {
+
         return authUserRepository.findById(Integer.valueOf(userEditByAdminDTO.getId())).flatMap(authUser -> {
             authUser.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
             authUser.setRole(userEditByAdminDTO.getRole());

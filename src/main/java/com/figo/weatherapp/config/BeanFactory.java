@@ -19,6 +19,14 @@ import java.text.SimpleDateFormat;
  */
 @Configuration
 public class BeanFactory {
+    /**
+     * The feignBuilder function is a Spring Bean that creates a Feign Builder.
+     * The Feign Builder is used to create Feign clients.
+     *
+     * @return A feign
+     *
+     * @docauthor Manguberdi
+     */
     @Bean
     @Scope("prototype")
     public Feign.Builder feignBuilder() {

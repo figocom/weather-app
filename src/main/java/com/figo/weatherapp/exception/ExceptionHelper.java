@@ -15,8 +15,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.messaging.handler.annotation.support.MethodArgumentNotValidException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -47,9 +47,20 @@ public class ExceptionHelper {
     private boolean isDev() {
         return activeProfile == null || activeProfile.equals("dev") || activeProfile.equals("ser");
     }
+    /**
+     * The handleException function is a function that handles the exception thrown by the application.
+     *
+     *
+     * @param ex ex Get the list of field errors
+     *
+     * @return A responseentity&lt;apiresult&lt;errordata&gt;&gt; object
+     *
+     * @docauthor Manguberdi
+     */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     public ResponseEntity<ApiResult<ErrorData>> handleException(MethodArgumentNotValidException ex) {
+
         ex.printStackTrace();
         sendMessageToTelegramChannel(ex);
         List<ErrorData> errors = new ArrayList<>();
@@ -94,18 +105,6 @@ public class ExceptionHelper {
                 HttpStatus.FORBIDDEN);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<ApiResult<ErrorData>> handleException(Exception ex) {
         sendMessageToTelegramChannel(ex);
@@ -126,7 +125,17 @@ public class ExceptionHelper {
                 ApiResult.errorResponse(ex.getMessage(), 503),
                 HttpStatus.SERVICE_UNAVAILABLE);
     }
+    /**
+     * The sendMessageToTelegramChannel function sends a message to the Telegram channel.(currently not used)
+     *
+     * @param ex ex Get the exception message
+     *
+     * @return A void
+     *
+     * @docauthor Manguberdi Murtozayev
+     */
     private void sendMessageToTelegramChannel(Exception ex) {
+
         log.info("sendMessageToTelegramChannel");
 
         if (isDev()) {

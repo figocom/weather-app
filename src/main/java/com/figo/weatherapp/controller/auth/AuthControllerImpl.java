@@ -16,13 +16,34 @@ public class AuthControllerImpl implements AuthController{
 
 
 
+    /**
+     * The signUpApplication function is used to sign up a new application.
+     *
+     *
+     * @param signUpDTO signUpDTO Get the user's email and password
+     *
+     * @return A mono&lt;apiresult&lt;tokendto&gt;&gt;
+     *
+     * @docauthor Manguberdi
+     */
     @Override
     public Mono<ApiResult<TokenDTO>> signUpApplication(SignUpDTO signUpDTO) {
+
         return authService.signUpApplication(signUpDTO);
     }
 
+    /**
+     * The signInApplication function is used to sign in an application.
+     *
+     * @param signInDTO signInDTO Get the username and password from the request body
+     *
+     * @return A mono&lt;apiresult&lt;tokendto&gt;&gt;
+     *
+     * @docauthor Manguberdi
+     */
     @Override
     public Mono<ApiResult<TokenDTO>> signInApplication(SignInDTO signInDTO) {
+
         return authService.signInApplication(signInDTO);
     }
 

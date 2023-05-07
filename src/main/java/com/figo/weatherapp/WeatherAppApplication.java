@@ -33,6 +33,7 @@ import java.util.TimeZone;
 )
 public class WeatherAppApplication {
     public static void main(String[] args) {
+
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         SpringApplication.run(WeatherAppApplication.class, args);
     }

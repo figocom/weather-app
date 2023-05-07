@@ -28,14 +28,40 @@ public class SecurityConfigurer {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final SecurityContextRepository securityContextRepository;
 
+    /**
+     * The SecurityConfigurer function configures the WebSecurity object to use our custom JwtAuthenticationFilter
+     * and SecurityContextRepository. It also disables CSRF protection, which is not needed in a REST API.
+
+     *
+     * @param jwtAuthenticationFilter jwtAuthenticationFilter Create a new instance of the jwtauthenticationfilter class
+     * @param securityContextRepository securityContextRepository Save the security context
+     *
+     * @return A securityconfigureradapter
+     *
+     * @docauthor Manguberdi
+     */
     public SecurityConfigurer(JwtAuthenticationFilter jwtAuthenticationFilter, SecurityContextRepository securityContextRepository) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.securityContextRepository = securityContextRepository;
     }
 
 
+    /**
+     * The webFilterChain function configures the security filter chain that intercepts incoming requests and applies authentication and authorization rules.
+     * The function disables CSRF protection, form login, HTTP basic authentication, and sets up an exception handling mechanism for failed authentications.
+     * It also registers a custom ReactiveAuthenticationManager bean to handle JWT token-based authentications.
+
+     *
+     * @param http http Configure the security filter chain
+     * @param manager manager Authenticate the user
+     *
+     * @return A securitywebfilterchain object
+     *
+     * @docauthor Manguberdi
+     */
     @Bean
     public SecurityWebFilterChain webFilterChain(ServerHttpSecurity http, ReactiveAuthenticationManager manager) {
+
         return http
                 .csrf().disable()
                 .formLogin().disable()
@@ -55,9 +81,26 @@ public class SecurityConfigurer {
                 .build();
     }
 
+    /**
+     * The reactiveAuthenticationManager function creates a ReactiveAuthenticationManager bean.
+     * This is used to authenticate the user credentials provided by the client during login.
+     * The UserDetailsRepositoryReactiveAuthenticationManager class is used for this purpose, and it requires a
+     * ReactiveUserDetailsService implementation (which we provide as an argument). We also set the password encoder
+     * that will be used to verify passwords (we use BCryptPasswordEncoder). Finally, we return an instance of our new manager.
+
+
+     *
+     * @param detailsService detailsService Load the user details from the database
+     * @param passwordEncoder passwordEncoder Encode the password
+     *
+     * @return A reactiveauthenticationmanager
+     *
+     * @docauthor Manguberdi
+     */
     @Bean
     public ReactiveAuthenticationManager reactiveAuthenticationManager(ReactiveUserDetailsService detailsService,
                                                                        PasswordEncoder passwordEncoder) {
+
         var manager = new UserDetailsRepositoryReactiveAuthenticationManager(detailsService);
         manager.setPasswordEncoder(passwordEncoder);
         return manager;
