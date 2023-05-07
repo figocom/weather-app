@@ -207,17 +207,18 @@ http://localhost:8888/ui
 | Parameter  | Type      | Description  |
 |:-----------|:----------|:-------------|
 | `cityId`   | `Integer` | **Required** |
- auto update city weather from open weather api Link: https://api.weatherapi.com
+#### auto update city weather from open weather api Link: https://api.weatherapi.com
  with Reactive Feign Client
 **Required JWT token**
 
 #### PATCH update all city's weather
 
 ```http
-    PATCH /api/v1/city/update-city-weather-all
+    api/v1/city/update-city-weather-all
 ```
  auto update all cities' weather from open weather api Link: https://api.weatherapi.com
  with Reactive Feign Client
+####
 **Required JWT token**
 
 #### update city weather manually
