@@ -220,7 +220,7 @@ http://localhost:8888/ui
  with Reactive Feign Client
 **Required JWT token**
 
-#### PATCH update city weather manually
+#### update city weather manually
 
 ```http
     PATCH /api/v1/city/update-city-weather-manual/{cityId}
