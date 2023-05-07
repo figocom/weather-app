@@ -247,6 +247,15 @@ auto update city weather from open weather api Link: https://api.weatherapi.com
 ####
 **Required JWT token**
 
+## Installation
+
+Install weather api to docker with maven
+
+```bash
+   mvn clean package
+```
+
+
 ## Features
 
 - Spring security with JWT
