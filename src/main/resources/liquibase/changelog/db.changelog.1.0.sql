@@ -1,5 +1,6 @@
 --liquibase formatted sql
---checksums: 1:0b1b0b0b0b0b0b0b0b0b0b0b0b0b0b0b
+
+
 
 --changeset manguberdi:1
 create table if not exists auth_user (
