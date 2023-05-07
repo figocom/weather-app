@@ -134,26 +134,10 @@ public class ExceptionHelper {
         }
         try {
             String message = ex.getMessage();
-            //todo get current user and set url
-            UserDTO currentUserOrNull = new UserDTO();
-            String url = "";
-//
-//            ServletUriComponentsBuilder servletUriComponentsBuilder = ServletUriComponentsBuilder.fromCurrentRequestUri();
-//            String url = servletUriComponentsBuilder.toUriString();
-
             ExceptionMessageDTO exceptionMessageDTO = new ExceptionMessageDTO();
-
-            UserDTO userDTO = new UserDTO();
-            userDTO.setFirstName(currentUserOrNull.getFirstName());
-            userDTO.setLastName(currentUserOrNull.getLastName());
-            userDTO.setId(currentUserOrNull.getId());
-
-            exceptionMessageDTO.setUser(userDTO);
             exceptionMessageDTO.setMessage(message);
-            exceptionMessageDTO.setUrl(url);
             exceptionMessageDTO.setServiceName("weather-service");
-            //todo rabbitMQProducerService.sendExceptions(exceptionMessageDTO);
-            //rabbitMQProducerService.sendExceptions(exceptionMessageDTO);
+            log.error("sendMessageToTelegramChannel: " + exceptionMessageDTO);
         } catch (Exception e) {
             e.printStackTrace();
         }
