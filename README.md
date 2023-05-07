@@ -223,8 +223,7 @@ http://localhost:8888/ui
 
 #### update city weather manually
 
-```http
-    api/v1/city/update-city-weather-manual/{cityId}
+```http api/v1/city/update-city-weather-manual/{cityId}
 ```
 | Parameter  | Type      | Description  |
 |:-----------|:----------|:-------------|
