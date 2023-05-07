@@ -1,17 +1,17 @@
 package com.figo.weatherapp.repository;
 
 import com.figo.weatherapp.entity.AuthUser;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.repository.reactive.ReactiveCrudRepository;
+import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Mono;
 
 import java.util.Optional;
-import java.util.UUID;
 
-public interface AuthUserRepository extends JpaRepository<AuthUser, Long>{
-    //USERNI PHONENUMBER ORQALI DB DAN OLYAPDI TOPILMASA BO'SH QAYTARADI
-    Optional<AuthUser> findFirstByPhoneNumberAndEnabledIsTrueAndAccountNonExpiredIsTrueAndCredentialsNonExpiredIsTrueAndAccountNonLockedIsTrue(String phoneNumber);
+@Repository
+public interface AuthUserRepository extends ReactiveCrudRepository<AuthUser, Integer> {
+    Mono<AuthUser> findFirstByUsernameAndEnabledIsTrueAndAccountNonExpiredIsTrueAndCredentialsNonExpiredIsTrueAndAccountNonLockedIsTrue(String phoneNumber);
 
-   Optional<AuthUser> findById(UUID uuid);
+    Mono<AuthUser> findFirstByIdAndEnabledIsTrueAndAccountNonExpiredIsTrueAndCredentialsNonExpiredIsTrueAndAccountNonLockedIsTrue(Integer id);
 
+    Optional<AuthUser> findByUsername(String username);
 }

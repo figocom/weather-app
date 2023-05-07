@@ -1,15 +1,11 @@
 package com.figo.weatherapp.entity.template;
 
-import com.figo.weatherapp.utils.ColumnKey;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.relational.core.mapping.Column;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -20,15 +16,12 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @ToString
-@MappedSuperclass
+
 @FieldNameConstants
 public abstract class AbsDateAudit implements Serializable {
-    @CreationTimestamp
-    @Column(updatable = false, name = ColumnKey.CREATED_AT)
+    @Column("created_at")
     private Timestamp createdAt;//OBJECT YANGI OCHIGANDA ISHLATILADI
-
-    @UpdateTimestamp
-    @Column(name = "updated_at")
+    @Column("updated_at")
     private Timestamp updatedAt;//OBJECT O'ZGARGANDA ISHLAYDI
 
     private Boolean deleted = false;

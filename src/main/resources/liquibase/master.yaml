@@ -1,0 +1,15 @@
+#https://docs.liquibase.com/change-types/home.html
+databaseChangeLog:
+  - changeSet:
+      id: 5/3/2023
+      author: manguberdi
+      validCheckSum: any
+      runAlways: false
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: changelog/db.changelog.1.0.sql
+            relativeToChangelogFile: true
+            splitStatements: false
+            stripComments: false
+            endDelimiter: \nGO

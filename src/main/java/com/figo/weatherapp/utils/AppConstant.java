@@ -1,6 +1,8 @@
 package com.figo.weatherapp.utils;
 
+import com.figo.weatherapp.controller.admin.AdminController;
 import com.figo.weatherapp.controller.auth.AuthController;
+import com.figo.weatherapp.controller.city.CityController;
 
 /**
  * @author Murtozayev Manguberdi
@@ -26,11 +28,14 @@ public interface AppConstant {
     String SERVICE_USERNAME_HEADER = "username";
     String[] OPEN_PAGES_FOR_ALL_METHOD = {
          AuthController.AUTH_CONTROLLER_PATH + "**",
+            "/ui",
+            "/api-docs/**",
             "/swagger-ui/**",
-            "/api-docs",
-            "/api/auth/actuator/refresh",
-            "/actuator/refresh",
+            "/webjars/**",
     };
-    String PHONE_NUMBER_REGEX = "^\\+998[0-9]{9}$";
-    String SMS_CODE_REGEX = "^[0-9]{5,8}$";
+    String[] OPEN_PAGES_FOR_ADMIN = {
+            AdminController.AdminControllerPath + "**",
+            CityController.CITY_CONTROLLER_PATH + "**",
+    };
+
 }

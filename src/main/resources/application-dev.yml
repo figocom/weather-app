@@ -1,6 +1,13 @@
 server:
   host: localhost
 spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/weather
+    username: postgres
+    password: root123
+    properties:
+      driver: postgresql
+
   datasource:
     url: jdbc:postgresql://localhost:5432/weather
     username: postgres
@@ -12,21 +19,27 @@ spring:
       idleTimeout: 130000
       connectionTimeout: 310000
       leakDetectionThreshold: 310000
-  servlet:
-    multipart:
-      max-file-size: 10MB
-      max-request-size: 10MB
+
+
+  main:
+      allow-bean-definition-overriding: true
   liquibase:
     change-log: classpath:liquibase/master.yaml
-    enabled: false
+    enabled: true
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    default-schema: public
+    driver-class-name: org.postgresql.Driver
+
   jackson:
     serialization:
       FAIL-ON-EMPTY-BEANS: false
 
   jpa:
-    show-sql: false
+    show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     properties:
       hibernate:
         enable_lazy_load_no_trans: true
@@ -54,13 +67,15 @@ spring:
       pool:
         max-wait: 1000
         max-active: 1000
+  activemq:
+    broker-url:
 springdoc:
   api-docs:
     enabled: true
     path: /api-docs
   swagger-ui:
     enabled: true
-    path: /swagger
+    path: /ui
     tags-sorter: alpha
     operations-sorter: alpha
     disable-swagger-default-url: true
@@ -81,6 +96,7 @@ feign:
       default:
         connect-timeout: 3000
         read-timeout: 3000
+        errorDecoder: com.figo.weatherapp.feign.CustomFeignErrorDecoder
 
 
 management:
@@ -91,14 +107,17 @@ management:
   endpoint:
     health:
       show-details: always
+weather-service:
+  http-client:
+    read-timeout: 5000
+    write-timeout: 5000
+    connect-timeout: 5000
+    response-timeout: 5000
+  retry:
+    max-retry: 3
+    retry-interval: 5000
+  urls:
+    base-url: http://api.weatherapi.com/v1/current.json?key=${weather-service.key}&q={city}
+  key: 4723df57a3b74b9f9a6173125230105
 
-app:
-  jwt:
-    access:
-      token:
-        key: "j~T2>2VgYH$g~e5Ae7418f6c-cf41-11eb-b8bc-0242ac1300032VgYH$g"
-        expiration-in-ms: 604800000
-    refresh:
-      token:
-        key: "Q&qhFLXq:*aS8G>1d797e14-cf42-11eb-b8bc-0242ac130003qhF"
-        expiration-in-ms: 604800000
+

@@ -7,23 +7,19 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+
 @Data
 public class UserEditDTO {
-    private UUID id;
+    private Integer id;
 
-    @NotBlank
+    @NotBlank(message = "first name cannot be null")
     private String firstName;
 
-    @NotBlank
+    @NotBlank(message = "last name cannot be null")
     private String lastName;
-    @NotBlank
+    @NotBlank(message = "password cannot be null")
     private String currentPassword;
 
-    //TELEFON RAQAMI
-    private String phoneNumber;
 
-    @Email(message = "{EMAIL_PATTERN}")
-    private String email;
 
 }

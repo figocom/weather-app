@@ -2,6 +2,8 @@ package com.figo.weatherapp.net;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
+import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.web.reactive.function.BodyInserter;
 
 import java.io.Serializable;
 import java.util.Collections;

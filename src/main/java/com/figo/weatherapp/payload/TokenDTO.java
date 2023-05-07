@@ -18,6 +18,4 @@ public class TokenDTO {
     private String tokenType;
 
     private String accessToken;
-
-    private String refreshToken;
 }

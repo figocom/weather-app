@@ -14,18 +14,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResetPasswordDTO {
-
-    //AGAR MIJOZ SMS ORQALI PAROLNI TIKLASA, MIJOZGA YUBORILGAN SMS CODE ID SI
-    private UUID smsCodeId;
-
-    //AGAR MIJOZ SMS ORQALI PAROLNI TIKLASA, MIJOZGA YUBORILGAN SMS CODE
-    @Pattern(regexp = AppConstant.SMS_CODE_REGEX, message = "{BAD_REQUEST}")
-    private String smsCode;
-
-
-    //AGAR MIJOZ EMAIL ORQALI PAROLNI TIKLASA, EMAILGA YUBORILGAN TASDIQLASH KODI
-    @Pattern(regexp = AppConstant.SMS_CODE_REGEX, message = "{BAD_REQUEST}")
-    private String emailCode;
+     private String oldPassword;
+     private String newPassword;
+     private String confirmNewPassword;
 }
 
 

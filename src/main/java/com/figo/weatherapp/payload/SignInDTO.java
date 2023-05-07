@@ -14,10 +14,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class SignInDTO {
 
-    @NotBlank
-    @Pattern(regexp = AppConstant.PHONE_NUMBER_REGEX,
-            message = "Telefon raqam formati xato. Telefon raqam + bilan boshlanib, 9 tadan 15 tagacha sonlarda iborat bo'lishi kerak")
-    private String phoneNumber;
+    @NotBlank(message = "Ism bo'sh bo'lmasin")
+      private String username;
 
     @NotBlank
     private String password;

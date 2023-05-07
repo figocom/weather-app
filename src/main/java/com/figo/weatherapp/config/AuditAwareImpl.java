@@ -4,19 +4,19 @@ import com.figo.weatherapp.payload.UserDTO;
 import org.springframework.data.domain.AuditorAware;
 
 import java.util.Optional;
-import java.util.UUID;
-
-import static com.figo.weatherapp.utils.CommonUtils.getUserDTOFromRequestForAuditing;
 
 
-public class AuditAwareImpl implements AuditorAware<UUID> {
+public class AuditAwareImpl implements AuditorAware<Integer> {
 
     @Override
-    public Optional<UUID> getCurrentAuditor() {
-        UserDTO userDTOFromRequest = getUserDTOFromRequestForAuditing();
+    public Optional<Integer> getCurrentAuditor() {
+
+        UserDTO userDTOFromRequest = new UserDTO();
         if (userDTOFromRequest != null) {
             return Optional.of(userDTOFromRequest.getId());
         }
         return Optional.empty();
     }
+
+   
 }
